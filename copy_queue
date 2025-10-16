@@ -1,0 +1,108 @@
+queue = [1,2,3]
+
+copy_queue = queue.copy()
+
+print(queue)
+print(copy_queue)
+
+if queue == copy_queue:
+    print('The contents of these objects are the same')
+else:
+    print('The contents of these objects are different')
+
+print(queue is copy_queue)#It will print false because they are different objects. i.e 
+
+'''OBJECTS ARE DIFFERENT BECAUSE THEY OCCUPY DIFFERENT SPACES IN MEMORY 
+
+so it's not that the objects are actually different, it's just that they are in different places in memory?
+
+And is it the fact that objects occupy different spaces in memory, which is the only defining trait that makes them different?
+ChatGPT said:
+Buddy — that’s an excellent and very insightful question 👏
+Let’s unpack it carefully, because you’re really touching the essence of how Python treats objects and identity.
+
+🧩 You said:
+So it's not that the objects are actually different, it's just that they are in different places in memory?
+✅ That’s almost perfectly right — but let’s sharpen it a little:
+When two lists have the same contents but different memory locations, Python treats them as two distinct objects — not just “copies in different places.”
+
+They are structurally identical, but each one lives independently in memory.
+
+If you modify one, the other won’t change:
+
+queue = [1, 2, 3]
+copy_queue = queue.copy()
+
+copy_queue.append(4)
+
+print(queue)       # [1, 2, 3]
+print(copy_queue)  # [1, 2, 3, 4]
+That independence — coming from having separate memory — is exactly what defines them as different objects.
+
+So to your second question:
+Is the fact that objects occupy different spaces in memory the only defining trait that makes them different?
+Yes — in Python, object identity is literally defined by its memory address (ID).
+That’s what the is operator checks internally.
+If two variables point to the same address → they are the same object.
+If they point to different addresses → they are different objects, even if they look the same.
+
+You can confirm this:
+
+queue = [1, 2, 3]
+copy_queue = queue.copy()
+
+print(id(queue) == id(copy_queue))  # False
+print(queue is copy_queue)          # False
+
+Concept	Meaning	Example
+Equality (==)	Same contents	[1,2,3] == [1,2,3] → True
+Identity (is)	Same memory address (same actual object)	[1,2,3] is [1,2,3] → False
+Different memory = different object	even if the contents are identical	id() values differ
+
+
+Would you like me to visualize this with a tiny memory diagram (like boxes and arrows showing how the variables point to memory)? It makes it crystal clear.
+You said:
+Yes pls
+ChatGPT said:
+Awesome 😎 — here’s a simple mental picture of what’s really going on under the hood.
+Let’s visualize both cases 👇
+
+🧩 Case 1: copy_queue = queue.copy()
+┌───────────────┐         ┌───────────────┐
+│   variable    │         │   variable    │
+│    queue      │         │  copy_queue   │
+└──────┬────────┘         └──────┬────────┘
+       │                         │
+       ▼                         ▼
+┌────────────────────────┐   ┌────────────────────────┐
+│   [1, 2, 3] (object A) │   │   [1, 2, 3] (object B) │
+│   id = 1001            │   │   id = 2002            │
+└────────────────────────┘   └────────────────────────┘
+✅ Both objects look the same, but:
+They live in different locations in memory.
+Changing one won’t affect the other.
+queue == copy_queue → True (same contents)
+queue is copy_queue → False (different objects)
+🧩 Case 2: copy_queue = queue
+┌───────────────┐
+│   queue       │
+│   copy_queue  │
+└──────┬────────┘
+       │
+       ▼
+┌────────────────────────┐
+│   [1, 2, 3] (object A) │
+│   id = 1001            │
+└────────────────────────┘
+✅ Now both variable names point to the same object in memory:
+Changing one will affect the other.
+queue == copy_queue → True
+queue is copy_queue → True
+🧠 Summary
+== checks whether the contents match.
+is checks whether both names point to the exact same memory address.
+So yes — in Python, the only defining difference between “same object” and “different objects” is their memory identity.
+
+
+'''
+
